@@ -23,7 +23,7 @@ from statsmodels.tsa.stattools import adfuller as ADF
 from statsmodels.graphics.tsaplots import plot_pacf
 from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.arima_model import ARIMA
-from decimal import Decimal
+
 
 """
 cm_plot-->自定义混淆矩阵可视化
