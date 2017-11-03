@@ -10,6 +10,13 @@ import pandas as pd
 from sklearn.cluster import KMeans
 import time
 
+"""
+programmer_1-->进行聚类离散化
+programmer_2-->None
+find_rule-->定义关联规则
+connect_string-->字符串连接
+"""
+
 
 def programmer_1():
 
