@@ -7,16 +7,16 @@ import numpy as np
 import matplotlib.pyplot as plt	# 可视化操作
 import os # 系统文件处理模块
 import time # 时间处理模块
-import pywt # 小波处理的模块
-import pickle # 保存模型, python自带模块
-from numpy.random import shuffle # 用于随机打乱数据
 from random import shuffle # 用于随机打乱数据
+import pywt # 小波处理的模块
+import numpy.random import shuffle # 用于随机打乱数据
+import pickle # 保存模型,
 
 
 # 按名称排序
 from scipy.interpolate import lagrange # 拉格朗日填值
 from scipy.io import loadmat # 读取matlab的格式文件
-from sklearn import svm # 支持向量机
+from sklearn import svm
 from sklearn.cluster import KMeans # KMeans聚类
 from sklearn.decomposition import PCA # 主成分分析
 from sklearn.externals.six import StringIO # 将决策树导出为dot
