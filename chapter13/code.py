@@ -18,6 +18,7 @@ GM11-->自定义的灰度预测函
 programmer_1-->读取文件提取基本信息
 programmer_2-->用自定义的灰度预测函数，进行预测
 programmer_3-->建立神经网络模型，进行预测并画图预测图
+programmer_4-->使用自定义的灰度预测模型进行预测一组数据，并且画图
 """
 
 
@@ -238,4 +239,4 @@ if __name__ == "__main__":
     #              units2=1,
     #              epochs_num=15000# )
 
-    programmer_4()
+    # programmer_4()
