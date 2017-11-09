@@ -32,11 +32,12 @@ def GM11(x0):
     # 矩阵计算，计算参数
     [[a], [b]] = np.dot(np.dot(np.linalg.inv(np.dot(B.T, B)), B.T), Yn)
     # 还原值
-    f = lambda k: (x0[0] - b / a) * np.exp(-a * (k - 1)) -( x0[0] - b / a) * np.exp(-a * (k - 2))
 
-    delta=np.abs(x0 - np.array([f(i) for i in range(1, len(x0) + 1)]))
-    C=delta.std() / x0.std()
-    P=1.0 * (np.abs(delta - delta.mean()) <
+    f = lambda k: (x0[0] - b / a) * np.exp(-a * (k - 1)) - (x0[0] - b / a) * np.exp(-a * (k - 2))
+
+    delta = np.abs(x0 - np.array([f(i) for i in range(1, len(x0) + 1)]))
+    C = delta.std() / x0.std()
+    P = 1.0 * (np.abs(delta - delta.mean()) <
                0.6745 * x0.std()).sum() / len(x0)
     # 灰度预测函数、a、b、首项、方差比、小残差概率
 
@@ -45,13 +46,13 @@ def GM11(x0):
 
 def programmer_1(inputfile, data_range):
     # inputfile = "data/data1.csv"
-    data=pd.read_csv(inputfile)
+    data = pd.read_csv(inputfile)
     """
     原始方法，替代方法可以使用describe()方法，然后进行筛选
     r = [data.min(), data.max(), data.mean(), data.std()]
     r = pd.DataFrame(r, index = ["Min", "Max", "Mean", "STD"]).T
     """
-    r=pd.DataFrame(data.describe()).T
+    r = pd.DataFrame(data.describe()).T
     np.round(r, 2)
 
     # 计算相关系数矩阵
@@ -61,73 +62,91 @@ def programmer_1(inputfile, data_range):
     原代码使用的是AdaptiveLasso，现更新为Lasso
     参数也由gamma变为tol（有待验证）
     """
-    model =Lasso(tol = 1)
+    model = Lasso(tol=1)
     model.fit(data.iloc[:, 0:data_range], data["y"])
     # 各个特征的系数
     model.coef_
     print(model.coef_)
 
 
-def programmer_2(inputfile, outputfile, startyear, feature_lst, roundnum = 0):
+def programmer_2(inputfile, outputfile, startyear, feature_lst, roundnum=0):
     """
     year： 开始年份
     feature_lst: 特征列
     roundnum： 四舍五入保留的位数
     """
-    data=pd.read_csv(inputfile)
-    data.index=range(startyear, 2014)
+    data = pd.read_csv(inputfile)
+    data.index = range(startyear, 2014)
 
-    data.loc[2014]=None
-    data.loc[2015]=None
+    data.loc[2014] = None
+    data.loc[2015] = None
     for i in feature_lst:
-        f=GM11(data[i][list(range(startyear, 2014))].as_matrix())[0]
+        f = GM11(data[i][list(range(startyear, 2014))].as_matrix())[0]
         # 2014年预测结果
-        data[i][2014]=f(len(data) - 1)
+        data[i][2014] = f(len(data) - 1)
         # 2015年预测结果
-        data[i][2015]=f(len(data))
-        data[i]=data[i].round(roundnum)
+        data[i][2015] = f(len(data))
+        data[i] = data[i].round(roundnum)
 
     print(data[feature_lst + ["y"]])
     data[feature_lst + ["y"]].to_excel(outputfile)
 
 
-def programmer_3(inputfile, outputfile, modelfile, feature_lst, startyear, input_dim_1, units1, input_dim_2, units2, epochs_num = 10000, roundnum = 0):
+def programmer_3(inputfile, outputfile, modelfile, feature_lst, startyear, input_dim_1, units1, input_dim_2, units2, epochs_num=10000, roundnum=0):
     """
     feature_lst: 特征列
     input_dim、units: 表示训练模型层数和神经元个数
     roundnum: 四舍五入
     """
 
-    data=pd.read_excel(inputfile)
+    data = pd.read_excel(inputfile)
     # 特征列
     # 取startyear年以前的数据
-    data_train=data.loc[range(startyear, 2014)].copy()
-    data_mean=data_train.mean()
-    data_std=data.std()
+    data_train = data.loc[range(startyear, 2014)].copy()
+    data_mean = data_train.mean()
+    data_std = data.std()
     # 数据标准化
-    data_train=(data_train - data_mean) / data_std
+    data_train = (data_train - data_mean) / data_std
     # 特征数据
-    x_train=data_train[feature_lst].as_matrix()
+    x_train = data_train[feature_lst].as_matrix()
     # 标签数据
-    y_train=data_train["y"].as_matrix()
+    y_train = data_train["y"].as_matrix()
 
-    model=Sequential()
+    model = Sequential()
     model.add(Dense(input_dim=input_dim_1, units=units1))
     model.add(Activation("relu"))
     model.add(Dense(input_dim=input_dim_2, units=units2))
-    model.compile(loss = "mean_squared_error", optimizer = "adam")
-    model.fit(x_train, y_train, epochs = epochs_num, batch_size = 16)
+    model.compile(loss="mean_squared_error", optimizer="adam")
+    model.fit(x_train, y_train, epochs=epochs_num, batch_size=16)
     model.save_weights(modelfile)
 
     # 预测，并且还原结果
-    x=((data[feature_lst] - data_mean[feature_lst]) /
+    x = ((data[feature_lst] - data_mean[feature_lst]) /
          data_std[feature_lst]).as_matrix()
-    data["y_pred"]=model.predict(x) * data_std["y"] + data_mean["y"]
-    data["y_pred"]=data["y_pred"].round(roundnum)
+    data["y_pred"] = model.predict(x) * data_std["y"] + data_mean["y"]
+    data["y_pred"] = data["y_pred"].round(roundnum)
 
     data.to_excel(outputfile)
     # 画出预测结果图
-    p=data[["y", "y_pred"]].plot(subplots = True, style = ["b-o", "r-*"])
+    p = data[["y", "y_pred"]].plot(subplots=True, style=["b-o", "r-*"])
+    plt.show()
+
+
+def programmer_4():
+    x0 = np.array([3152063, 2213050, 4050122,
+                   5265142, 5556619, 4772843, 9463330])
+    f, a, b, x00, C, P = GM11(x0)
+
+    print(u'2014年、2015年的预测结果分别为：\n%0.2f万元和%0.2f万元' % (f(8), f(9)))
+    print(u'后验差比值为：%0.4f' % C)
+    p = pd.DataFrame(x0, columns=["y"], index=range(2007, 2014))
+    p.loc[2014] = None
+    p.loc[2015] = None
+    p["y_pred"] = [f(i) for i in range(1, 10)]
+    p["y_pred"] = p["y_pred"].round(2)
+    p.index = pd.to_datetime(p.index, format="%Y")
+
+    p.plot(style=["b-o", "r-*"], xticks=p.index)
     plt.show()
 
 
@@ -219,18 +238,4 @@ if __name__ == "__main__":
     #              units2=1,
     #              epochs_num=15000# )
 
-    x0=np.array([3152063, 2213050, 4050122,
-                   5265142, 5556619, 4772843, 9463330])
-    f, a, b, x00, C, P=GM11(x0)
-
-    print(u'2014年、2015年的预测结果分别为：\n%0.2f万元和%0.2f万元' % (f(8), f(9)))
-    print(u'后验差比值为：%0.4f' % C)
-    p=pd.DataFrame(x0, columns = ["y"], index = range(2007, 2014))
-    p.loc[2014]=None
-    p.loc[2015]=None
-    p["y_pred"]=[f(i) for i in range(1, 10)]
-    p["y_pred"]=p["y_pred"].round(2)
-    p.index =pd.to_datetime(p.index, format = "%Y")
-
-    p.plot(style = ["b-o", "r-*"], xticks = p.index)
-    plt.show()
+    programmer_4()
