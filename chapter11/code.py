@@ -7,9 +7,10 @@ Created on Sat Nov  4 11:04:32 2017
 """
 
 import pandas as pd
-from statsmodels.tsa.stattools import adfuller as ADF
 from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.stattools import adfuller as ADF
+
 
 """
 FutureWarning警告：原因未知，在spyder3上运行第二次就消失了，猜测是使用了缓存的原因

@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-import pandas as pd 
-from scipy.interpolate import lagrange
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.externals import joblib
-from sklearn.metrics import roc_curve
-import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
 from random import shuffle
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from keras.layers.core import Activation, Dense
+from keras.models import Sequential
+from scipy.interpolate import lagrange
+from sklearn.externals import joblib
+from sklearn.metrics import confusion_matrix, roc_curve
+from sklearn.tree import DecisionTreeClassifier
 
 
 """

@@ -6,9 +6,11 @@ Created on Thu Nov  2 18:38:32 2017
 @author: lu
 """
 
+import time
+
 import pandas as pd
 from sklearn.cluster import KMeans
-import time
+
 
 """
 programmer_1-->进行聚类离散化
@@ -155,4 +157,3 @@ def programmer_2():
 if __name__ == "__main__":
     # programmer_1()
     programmer_2()
-

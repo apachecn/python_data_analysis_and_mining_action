@@ -6,12 +6,14 @@ Created on Wed Nov  8 23:05:54 2017
 @author: lu
 """
 
-import pandas as pd
 import numpy as np
-from sklearn.linear_model import Lasso
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
+
 import matplotlib.pyplot as plt
+import pandas as pd
+from keras.layers.core import Activation, Dense
+from keras.models import Sequential
+from sklearn.linear_model import Lasso
+
 
 """
 GM11-->自定义的灰度预测函

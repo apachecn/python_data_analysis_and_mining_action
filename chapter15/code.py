@@ -6,9 +6,10 @@ Created on Thu Nov  9 15:12:30 2017
 @author: lu
 """
 
-import pandas as pd
 import jieba
-from gensim import corpora, models 
+import pandas as pd
+from gensim import corpora, models
+
 
 """
 programmer_1-->提取数据
@@ -121,5 +122,3 @@ if __name__ == "__main__":
     # programmer_3()
     # programmer_4()
     # programmer_5()
-
-

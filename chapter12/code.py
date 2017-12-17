@@ -6,8 +6,9 @@ Created on Mon Nov  6 21:04:24 2017
 @author: lu
 """
 
-import pandas as pd
 import numpy as np
+
+import pandas as pd
 from sqlalchemy import create_engine
 
 

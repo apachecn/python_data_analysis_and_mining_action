@@ -5,10 +5,13 @@ Created on Sat Oct 14 17:03:39 2017
 @author: wnma3
 """
 
-import pandas as pd
-import numpy as np
 import os
+
+import numpy as np
+
 import matplotlib.pyplot as plt
+import pandas as pd
+
 
 """
 代码说明：
@@ -90,26 +93,3 @@ if __name__ == "__main__":
     # programmer_2('data/catering_sale.xls')
     # programmer_3('data/catering_dish_profit.xls')
     # programmer_4('data/catering_sale_all.xls')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

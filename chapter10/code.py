@@ -6,10 +6,11 @@ Created on Fri Nov  3 13:09:18 2017
 @author: lu
 """
 
-import pandas as pd
 import numpy as np
+
+import pandas as pd
+from keras.layers.core import Activation, Dense
 from keras.models import Sequential
-from keras.layers.core import Dense, Activation
 
 
 """

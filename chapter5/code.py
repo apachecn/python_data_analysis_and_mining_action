@@ -5,24 +5,24 @@ Created on Fri Oct 20 16:06:09 2017
 @author: wnma3
 """
 
-import pandas as pd
 import numpy as np
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from keras.layers.core import Activation, Dense
+from keras.models import Sequential
+from sklearn.cluster import KMeans
+from sklearn.externals.six import StringIO
 from sklearn.linear_model import LogisticRegression as LR
 from sklearn.linear_model import RandomizedLogisticRegression as RLR
+from sklearn.manifold import TSNE
+from sklearn.metrics import confusion_matrix
 from sklearn.tree import DecisionTreeClassifier as DTC
 from sklearn.tree import export_graphviz
-from sklearn.manifold import TSNE
-from sklearn.externals.six import StringIO
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
-from sklearn.metrics import confusion_matrix
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-from statsmodels.graphics.tsaplots import plot_acf
-from statsmodels.tsa.stattools import adfuller as ADF
-from statsmodels.graphics.tsaplots import plot_pacf
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.stattools import adfuller as ADF
 
 
 """

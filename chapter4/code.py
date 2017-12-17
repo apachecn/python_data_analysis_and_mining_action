@@ -5,16 +5,19 @@ Created on Sun Oct 15 19:42:13 2017
 @author: wnma3
 """
 
-import pandas as pd
-from pandas import DataFrame, Series
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.interpolate import lagrange
 import time
-from sklearn.cluster import KMeans 
-from scipy.io import loadmat    # mat是MATLAB的专用格式，调用loadmat方法读取
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+import pandas as pd
 import pywt
+from pandas import DataFrame, Series
+from scipy.interpolate import lagrange
+from scipy.io import loadmat  # mat是MATLAB的专用格式，调用loadmat方法读取
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+
 
 """
 代码说明：

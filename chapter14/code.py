@@ -6,11 +6,13 @@ Created on Thu Nov  9 14:26:54 2017
 @author: lu
 """
 
-import pandas as pd
 import numpy as np
+
 import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import linkage, dendrogram
+import pandas as pd
+from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.cluster import AgglomerativeClustering
+
 
 """
 programmer_1-->获取数据，进行离差标准化

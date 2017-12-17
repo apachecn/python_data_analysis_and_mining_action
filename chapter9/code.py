@@ -6,11 +6,13 @@ Created on Fri Nov  3 13:10:35 2017
 @author: lu
 """
 
-import pandas as pd
-from numpy.random import shuffle
-from sklearn import svm
 import pickle
-from sklearn import metrics
+
+from numpy.random import shuffle
+
+import pandas as pd
+from sklearn import metrics, svm
+
 
 """
 programmer_1-->svm支持向量机
