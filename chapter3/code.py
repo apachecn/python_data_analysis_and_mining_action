@@ -94,8 +94,8 @@ def programmer_4(file_name):
 
 
 if __name__ == "__main__":
-    # programmer_1(sys.path[0] + "/data/catering_sale.xls")
+    # programmer_1(sys.path[0] + '/data/catering_sale.xls')
     # programmer_2(sys.path[0] + '/data/catering_sale.xls')
-    # programmer_3('data/catering_dish_profit.xls')
-    # programmer_4('data/catering_sale_all.xls')
+    # programmer_3(sys.path[0] + '/data/catering_dish_profit.xls')
+    # programmer_4(sys.path[0] + '/data/catering_sale_all.xls')
     pass
