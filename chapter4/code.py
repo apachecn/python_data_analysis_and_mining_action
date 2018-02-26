@@ -138,10 +138,11 @@ def programmer_6():
     pca.explained_variance_ratio_
     data.to_excel(outputfile, index=False)
 
+
 if __name__ == '__main__':
     # programmer_1()
     # programmer_2()
-    programmer_3()
+    # programmer_3()
     # programmer_4()
     # programmer_5()
     # programmer_6()
