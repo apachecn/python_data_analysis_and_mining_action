@@ -141,7 +141,7 @@ def programmer_6():
 if __name__ == '__main__':
     # programmer_1()
     # programmer_2()
-    # programmer_3()
+    programmer_3()
     # programmer_4()
     # programmer_5()
     # programmer_6()
