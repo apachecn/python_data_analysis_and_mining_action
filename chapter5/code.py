@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=E1101
 """
 Created on Fri Oct 20 16:06:09 2017
 
@@ -23,8 +24,6 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.stattools import adfuller as ADF
-
-
 """
 cm_plot-->自定义混淆矩阵可视化
 density_plot-->自定义概率密度图函数
@@ -49,8 +48,11 @@ def cm_plot(y, yp):
 
     for x in range(len(cm)):
         for y in range(len(cm)):
-            plt.annotate(cm[x, y], xy=(
-                x, y), horizontalalignment='center', verticalalignment='center')
+            plt.annotate(
+                cm[x, y],
+                xy=(x, y),
+                horizontalalignment='center',
+                verticalalignment='center')
 
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
@@ -76,8 +78,8 @@ def programmer_1():
     rlr_support = rlr.get_support()
     support_col = data.columns[rlr_support]
 
-    print("rlr_support_columns: {columns}".format(
-        columns=','.join(support_col)))
+    print(
+        "rlr_support_columns: {columns}".format(columns=','.join(support_col)))
     x = data[data.columns[rlr.get_support()]].as_matrix()
 
     lr = LR()
@@ -121,13 +123,13 @@ def programmer_3():
 
     # 进行神经网络训练
     model = Sequential()
-    model.add(Dense(input_dim=3, output_dim=10))
+    model.add(Dense(input_dim=3, units=10))
     model.add(Activation('relu'))
-    model.add(Dense(input_dim=10, output_dim=1))
+    model.add(Dense(input_dim=10, units=1))
     model.add(Activation('sigmoid'))
     # 修正神经网络
     model.compile(loss='binary_crossentropy', optimizer='adam')
-    model.fit(x, y, nb_epoch=1000, batch_size=10)
+    model.fit(x, y, epochs=100, batch_size=10)
 
     yp = model.predict_classes(x).reshape(len(y))
 
@@ -166,14 +168,14 @@ def programmer_4():
     # 保存概率密度图
     pic_output = 'tmp/pd_'
     for i in range(k):
-        density_plot(data[r[u'聚类类别'] == i], k).savefig(
-            u'%s%s.png' % (pic_output, i))
+        density_plot(data[r[u'聚类类别'] == i],
+                     k).savefig(u'%s%s.png' % (pic_output, i))
 
     return data_zs, r
 
 
 def programmer_5(data_zs, r):
-     # 进行数据降维
+    # 进行数据降维
     tsne = TSNE()
     tsne.fit_transform(data_zs)
     tsne = pd.DataFrame(tsne.embedding_, index=data_zs.index)
@@ -297,6 +299,7 @@ def programmer_7():
     plt.ylabel(u'相对距离')
     plt.show()
 
+
 def connect_string(x, ms):
     x = list(map(lambda i: sorted(i.split(ms)), x))
     l = len(x[0])
@@ -307,13 +310,14 @@ def connect_string(x, ms):
                 r.append(x[i][:l - 1] + sorted([x[j][l - 1], x[i][l - 1]]))
     return r
 
+
 def find_rule(d, support, confidence, ms=u'--'):
     # 定义输出结果
-    result = pd.DataFrame(index=['support', 'confidence'])  
+    result = pd.DataFrame(index=['support', 'confidence'])
     # 支持度序列
-    support_series = 1.0*d.sum()/len(d)  
+    support_series = 1.0 * d.sum() / len(d)
     # 支持度第一次筛选
-    column = list(support_series[support_series > support].index)  
+    column = list(support_series[support_series > support].index)
     k = 0
 
     while len(column) > 1:
@@ -324,11 +328,11 @@ def find_rule(d, support, confidence, ms=u'--'):
 
         # 新一批支持度的计算函数
         def sf(i):
-            return d[i].prod(axis=1, numeric_only=True)  
+            return d[i].prod(axis=1, numeric_only=True)
 
         # 创建连接数据，这一步耗时、耗内存最严重。当数据集较大时，可以考虑并行运算优化。
-        d_2 = pd.DataFrame(list(map(sf, column)), index=[
-                           ms.join(i) for i in column]).T
+        d_2 = pd.DataFrame(
+            list(map(sf, column)), index=[ms.join(i) for i in column]).T
 
         # 计算连接后的支持度
         support_series_2 = 1.0 * \
@@ -346,17 +350,17 @@ def find_rule(d, support, confidence, ms=u'--'):
         cofidence_series = pd.Series(
             index=[ms.join(i) for i in column2])  # 定义置信度序列
         # 计算置信度序列
-        for i in column2:  
+        for i in column2:
             cofidence_series[ms.join(i)] = support_series[ms.join(
                 sorted(i))] / support_series[ms.join(i[:len(i) - 1])]
         # 置信度筛选
-        for i in cofidence_series[cofidence_series > confidence].index:  
+        for i in cofidence_series[cofidence_series > confidence].index:
             result[i] = 0.0
             result[i]['confidence'] = cofidence_series[i]
             result[i]['support'] = support_series[ms.join(sorted(i.split(ms)))]
 
-    result = result.T.sort_values(['confidence', 'support'],
-                                 ascending=False)  # 结果整理，输出
+    result = result.T.sort_values(
+        ['confidence', 'support'], ascending=False)  # 结果整理，输出
     print(u'\n结果为：')
     print(result)
 
@@ -369,11 +373,13 @@ def programmer_8():
     data = pd.read_excel(inputfile, header=None)
 
     print(u'\n转换原始数据至0-1矩阵...')
+
     # 转换0-1矩阵的过渡函数
     def ct(x):
-        return pd.Series(1, index=x[pd.notnull(x)])  
-    b = map(ct, data.as_matrix())  
-    data = pd.DataFrame(list(b)).fillna(0)  
+        return pd.Series(1, index=x[pd.notnull(x)])
+
+    b = map(ct, data.as_matrix())
+    data = pd.DataFrame(list(b)).fillna(0)
     print(u'\n转换完毕。')
     del b  # 删除中间变量b，节省内存
 
@@ -387,9 +393,10 @@ def programmer_8():
 if __name__ == "__main__":
     # programmer_1()
     # programmer_2()
-    # programmer_3()
+    programmer_3()
     # data_zs, r = programmer_4()
     # programmer_5(data_zs, r)
     # programmer_6()
     # programmer_7()
     # programmer_8()
+    pass
