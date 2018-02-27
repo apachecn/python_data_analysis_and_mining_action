@@ -10,7 +10,6 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from pandas.core import datetools
 from keras.layers.core import Activation, Dense
 from keras.models import Sequential
 from sklearn.cluster import KMeans
@@ -25,11 +24,11 @@ from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.stattools import adfuller as ADF
 """
-cm_plot-->自定义混淆矩阵可视化
-density_plot-->自定义概率密度图函数
-programmer_1-->使用线性回归找出相关系数，使用随机森林算出每个系数得分
+programmer_1-->使用随机森林算出有效特征，使用线性回归计算相关系数
 programmer_2-->使用决策数模型，生成决策树过程并保存为dot文件，天气、周末、促销决定销量
 programmer_3-->使用Keras神经网络模型，训练数据预测销量高低
+cm_plot-->自定义混淆矩阵可视化
+density_plot-->自定义概率密度图函数
 programmer_4-->使用KMeans聚类，做可视化操作（概率密度图）
 programmer_5-->继programmer_4将数据做降维处理，并且可视化不同聚类的类别
 programmer_6-->进行白噪声、平稳性检测，建立ARIMA(0, 1, 1)模型预测之后五天的结果
@@ -38,32 +37,6 @@ find_rule-->寻找关联规则的函数
 connect_string-->自定义连接函数，用于实现L_{k-1}到C_k的连接
 programmer_8-->菜单中各个菜品的关联程度
 """
-
-
-def cm_plot(y, yp):
-    cm = confusion_matrix(y, yp)
-
-    plt.matshow(cm, cmap=plt.cm.Greens)
-    plt.colorbar()
-
-    for x in range(len(cm)):
-        for y in range(len(cm)):
-            plt.annotate(
-                cm[x, y],
-                xy=(x, y),
-                horizontalalignment='center',
-                verticalalignment='center')
-
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-    return plt
-
-
-def density_plot(data, k):
-    p = data.plot(kind='kde', linewidth=2, subplots=True, sharex=False)
-    [p[i].set_ylabel(u'密度') for i in range(k)]
-    plt.legend()
-    return plt
 
 
 def programmer_1():
@@ -76,11 +49,11 @@ def programmer_1():
     rlr = RLR()
     rlr.fit(x, y)
     rlr_support = rlr.get_support()
-    support_col = data.columns[rlr_support]
+    support_col = data.drop('违约', axis=1).columns[rlr_support]
 
     print(
         "rlr_support_columns: {columns}".format(columns=','.join(support_col)))
-    x = data[data.columns[rlr.get_support()]].as_matrix()
+    x = data[support_col].as_matrix()
 
     lr = LR()
     lr.fit(x, y)
@@ -103,7 +76,6 @@ def programmer_2():
     dtc = DTC()
     dtc.fit(x, y)
 
-    x = pd.DataFrame(x)
     x = pd.DataFrame(x)
     with open("tree.dot", "w") as f:
         f = export_graphviz(dtc, feature_names=x.columns, out_file=f)
@@ -132,6 +104,24 @@ def programmer_3():
     model.fit(x, y, epochs=1000, batch_size=10)
 
     yp = model.predict_classes(x).reshape(len(y))
+
+    def cm_plot(y, yp):
+        cm = confusion_matrix(y, yp)
+
+        plt.matshow(cm, cmap=plt.cm.Greens)
+        plt.colorbar()
+
+        for x in range(len(cm)):
+            for y in range(len(cm)):
+                plt.annotate(
+                    cm[x, y],
+                    xy=(x, y),
+                    horizontalalignment='center',
+                    verticalalignment='center')
+
+        plt.ylabel('True label')
+        plt.xlabel('Predicted label')
+        return plt
 
     cm_plot(y, yp).show()
 
@@ -165,6 +155,12 @@ def programmer_4():
     r.columns = list(data.columns) + [u'聚类类别']
     r.to_excel(outputfile)
 
+    def density_plot(data, k):
+        p = data.plot(kind='kde', linewidth=2, subplots=True, sharex=False)
+        [p[i].set_ylabel(u'密度') for i in range(k)]
+        plt.legend()
+        return plt
+
     # 保存概率密度图
     pic_output = 'tmp/pd_'
     for i in range(k):
@@ -197,7 +193,7 @@ def programmer_6():
   "matplotlib is currently using a non-GUI backend, "
     调用了多次plt.show()
     解决方案，使用plt.subplot()
-    
+
     # RuntimeWarning: overflow encountered in exp
     运算精度不够
 
@@ -210,7 +206,7 @@ def programmer_6():
     data = pd.read_excel(discfile, index_col=u'日期')
 
     fig = plt.figure(figsize=(8, 6))
-    # 第一幅
+    # 第一幅自相关图
     ax1 = plt.subplot(411)
     fig = plot_acf(data, ax=ax1)
 
@@ -224,11 +220,11 @@ def programmer_6():
     # 时序图
     D_data.plot()
     plt.show()
-    # 第二幅
+    # 第二幅自相关图
     fig = plt.figure(figsize=(8, 6))
     ax2 = plt.subplot(412)
     fig = plot_acf(D_data, ax=ax2)
-    # 第三幅
+    # 偏自相关图
     ax3 = plt.subplot(414)
     fig = plot_pacf(D_data, ax=ax3)
     plt.show()
@@ -306,9 +302,9 @@ def programmer_7():
     discrete_points.plot(style='ro')
     # 标记离群点
     for i in range(len(discrete_points)):
-        id = discrete_points.index[i]
+        _id = discrete_points.index[i]
         n = discrete_points.iloc[i]
-        plt.annotate('(%s, %0.2f)' % (id, n), xy=(id, n), xytext=(id, n))
+        plt.annotate('(%s, %0.2f)' % (_id, n), xy=(_id, n), xytext=(_id, n))
 
     plt.xlabel(u'编号')
     plt.ylabel(u'相对距离')
@@ -411,7 +407,7 @@ if __name__ == "__main__":
     # programmer_3()
     # data_zs, r = programmer_4()
     # programmer_5(data_zs, r)
-    programmer_6()
+    # programmer_6()
     # programmer_7()
     # programmer_8()
     pass
