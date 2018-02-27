@@ -10,10 +10,10 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from pandas.core import datetools
 from keras.layers.core import Activation, Dense
 from keras.models import Sequential
 from sklearn.cluster import KMeans
-from sklearn.externals.six import StringIO
 from sklearn.linear_model import LogisticRegression as LR
 from sklearn.linear_model import RandomizedLogisticRegression as RLR
 from sklearn.manifold import TSNE
@@ -129,7 +129,7 @@ def programmer_3():
     model.add(Activation('sigmoid'))
     # 修正神经网络
     model.compile(loss='binary_crossentropy', optimizer='adam')
-    model.fit(x, y, epochs=100, batch_size=10)
+    model.fit(x, y, epochs=1000, batch_size=10)
 
     yp = model.predict_classes(x).reshape(len(y))
 
@@ -196,6 +196,8 @@ def programmer_6():
     # UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
   "matplotlib is currently using a non-GUI backend, "
     调用了多次plt.show()
+    解决方案，使用plt.subplot()
+    
     # RuntimeWarning: overflow encountered in exp
     运算精度不够
 
@@ -207,7 +209,10 @@ def programmer_6():
     forecastnum = 5
     data = pd.read_excel(discfile, index_col=u'日期')
 
-    plot_acf(data).show()
+    fig = plt.figure(figsize=(8, 6))
+    # 第一幅
+    ax1 = plt.subplot(411)
+    fig = plot_acf(data, ax=ax1)
 
     # 平稳性检测
     print(u'原始序列的ADF检验结果为：', ADF(data[u'销量']))
@@ -219,8 +224,16 @@ def programmer_6():
     # 时序图
     D_data.plot()
     plt.show()
-    plot_acf(D_data).show()
-    plot_pacf(D_data).show()
+    # 第二幅
+    fig = plt.figure(figsize=(8, 6))
+    ax2 = plt.subplot(412)
+    fig = plot_acf(D_data, ax=ax2)
+    # 第三幅
+    ax3 = plt.subplot(414)
+    fig = plot_pacf(D_data, ax=ax3)
+    plt.show()
+    fig.clf()
+
     print(u'差分序列的ADF检验结果为：', ADF(D_data[u'销量差分']))  # 平稳性检测
 
     # 白噪声检验
@@ -230,8 +243,11 @@ def programmer_6():
     pmax = int(len(D_data) / 10)  # 一般阶数不超过length/10
     qmax = int(len(D_data) / 10)  # 一般阶数不超过length/10
     bic_matrix = []  # bic矩阵
+    data.dropna(inplace=True)
 
-    # 存在部分报错，所以用try来跳过报错。
+    # 存在部分报错，所以用try来跳过报错；存在warning，暂未解决使用warnings跳过
+    import warnings
+    warnings.filterwarnings('error')
     for p in range(pmax + 1):
         tmp = []
         for q in range(qmax + 1):
@@ -240,7 +256,6 @@ def programmer_6():
             except:
                 tmp.append(None)
         bic_matrix.append(tmp)
-
     # 从中可以找出最小值
     bic_matrix = pd.DataFrame(bic_matrix)
     # 用stack展平，然后用idxmin找出最小值位置。
@@ -393,10 +408,10 @@ def programmer_8():
 if __name__ == "__main__":
     # programmer_1()
     # programmer_2()
-    programmer_3()
+    # programmer_3()
     # data_zs, r = programmer_4()
     # programmer_5(data_zs, r)
-    # programmer_6()
+    programmer_6()
     # programmer_7()
     # programmer_8()
     pass
