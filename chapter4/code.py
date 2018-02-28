@@ -37,7 +37,7 @@ def programmer_1():
     data[(data[u'销量'] < 400) | (data[u'销量'] > 5000)] = None
 
     def ployinterp_column(index, df, k=5):
-        y = df[index - k:index + index + 1:index + 1 + k]
+        y = df[list(range(index - k, index)) + list(range(index + 1, index + 1 + k))]
         y = y[y.notnull()]
         return lagrange(y.index, list(y))(index)
 
