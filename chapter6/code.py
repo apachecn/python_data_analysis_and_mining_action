@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-
+# pylint: disable=E1101
 from random import shuffle
 
 import matplotlib.pyplot as plt
@@ -56,7 +56,6 @@ def programmer_1():
 
     data.to_excel(outputfile, header=None, index=False)
 
-
 def programmer_2():
     datafile = 'data/model.xls'
     data = pd.read_excel(datafile)
@@ -89,7 +88,7 @@ def programmer_2():
     plt.xlim(0, 1.05) 
     plt.legend(loc=4) 
     plt.show() 
-
+    print(thresholds)
 
 def programmer_3():
     datafile = 'data/model.xls'
@@ -105,18 +104,18 @@ def programmer_3():
     netfile = 'tmp/net.model' 
 
     net = Sequential()  # 建立神经网络
-    # net.add(Dense(input_dim = 3, output_dim = 10))
+#    net.add(Dense(input_dim = 3, units = 10))
     # 添加输入层（3节点）到隐藏层（10节点）的连接
     net.add(Dense(10, input_shape=(3,)))
     net.add(Activation('relu'))  # 隐藏层使用relu激活函数
-    # net.add(Dense(input_dim = 10, output_dim = 1)) 
+#    net.add(Dense(input_dim = 10, units = 1)) 
     #添加隐藏层（10节点）到输出层（1节点）的连接
     net.add(Dense(1, input_shape=(10,)))
     net.add(Activation('sigmoid'))  # 输出层使用sigmoid激活函数
     net.compile(loss='binary_crossentropy', optimizer='adam',
                 sample_weight_mode="binary")  # 编译模型，使用adam方法求解
 
-    net.fit(train[:, :3], train[:, 3], epochs=1000,
+    net.fit(train[:, :3], train[:, 3], epochs=100,
             batch_size=1)
     net.save_weights(netfile)
 
@@ -135,9 +134,10 @@ def programmer_3():
     plt.xlim(0, 1.05)  
     plt.legend(loc=4)  
     plt.show()  
-
+    print(thresholds)
 
 if __name__ == "__main__":
     # programmer_1()
     # programmer_2()
     # programmer_3()
+    pass
