@@ -2,8 +2,6 @@
 
 import pandas as pd
 from sklearn.cluster import KMeans
-
-
 """
 programmer_1-->关于原始数据的一些特征描述并保存为新表，使用describe函数
 programmer_2-->对原始数据进行清理，对其中某些数据做运算，并进行保存
@@ -58,9 +56,9 @@ def programmer_3():
     data = pd.read_excel(datafile)
     # 核心语句，实现标准化变换，类似地可以实现任何想要的变换。
     data = (data - data.mean(axis=0)) / (data.std(axis=0))
-    data.columns = ['Z' + i for i in data.columns] 
+    data.columns = ['Z' + i for i in data.columns]
 
-    data.to_excel(zscoredfile, index=False) 
+    data.to_excel(zscoredfile, index=False)
 
 
 def programmer_4():
@@ -72,11 +70,12 @@ def programmer_4():
     kmodel.fit(data)
 
     kmodel.cluster_centers_  # 查看聚类中心
-    kmodel.labels_           # 查看各样本对应的类别
+    kmodel.labels_  # 查看各样本对应的类别
 
 
 if __name__ == "__main__":
     # programmer_1()
     # programmer_2()
     # programmer_3()
-    programmer_4()
+    # programmer_4()
+    pass
