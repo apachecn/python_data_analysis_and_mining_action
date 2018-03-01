@@ -69,8 +69,8 @@ def programmer_4():
     kmodel = KMeans(n_clusters=k, n_jobs=4)
     kmodel.fit(data)
 
-    kmodel.cluster_centers_  # 查看聚类中心
-    kmodel.labels_  # 查看各样本对应的类别
+    print(kmodel.cluster_centers_)  # 查看聚类中心
+    print(kmodel.labels_)  # 查看各样本对应的类别
 
 
 if __name__ == "__main__":
