@@ -5,7 +5,7 @@ Created on Sun Oct 15 19:42:13 2017
 @author: wnma3
 """
 
-import sys
+import os 
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -25,12 +25,11 @@ programmer_4-->基本的dataframe操作
 programmer_5-->利用小波分析（？？？）进行特征分析
 programmer_6-->利用PCA计算特征向量，用于降维分析
 """
-path = sys.path[0]
-
+path = os.getcwd()
 
 def programmer_1():
-    inputfile = path + 'data/catering_sale.xls'
-    outputfile = path + 'tmp/sales.xls'
+    inputfile = path + '/data/catering_sale.xls'
+    outputfile = path + '/tmp/sales.xls'
 
     data = pd.read_excel(inputfile)
 
@@ -53,7 +52,7 @@ def programmer_1():
 
 
 def programmer_2():
-    datafile = path + 'data/normalization_data.xls'
+    datafile = path + '/data/normalization_data.xls'
     data = pd.read_excel(datafile, header=None)
 
     print((data - data.min()) / (data.max() - data.min()))
@@ -63,7 +62,7 @@ def programmer_2():
 
 # 聚类画图
 def programmer_3():
-    datafile = path + 'data/discretization_data.xls'
+    datafile = path + '/data/discretization_data.xls'
     data = pd.read_excel(datafile)
     data = data[u'肝气郁结证型系数'].copy()
     k = 4
@@ -104,8 +103,8 @@ def programmer_3():
 
 
 def programmer_4():
-    inputfile = path + "data/electricity_data.xls"
-    outputfile = path + "tmp/electricity_data.xls"
+    inputfile = path + "/data/electricity_data.xls"
+    outputfile = path + "/tmp/electricity_data.xls"
     data = pd.read_excel(inputfile)
     data[u"线损率"] = (data[u"供入电量"] - data[u"供出电量"]) / data[u"供入电量"]
     data.to_excel(outputfile, index=False)
@@ -127,7 +126,7 @@ def programmer_5():
 
 def programmer_6():
     inputfile = path + "/data/principal_component.xls"
-    outputfile = "tmp/dimention_reducted.xls"
+    outputfile = "/tmp/dimention_reducted.xls"
 
     data = pd.read_excel(inputfile, header=None)
 

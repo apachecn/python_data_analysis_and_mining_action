@@ -6,7 +6,6 @@ Created on Sat Oct 14 17:03:39 2017
 """
 
 import os
-import sys
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -94,8 +93,9 @@ def programmer_4(file_name):
 
 
 if __name__ == "__main__":
-    # programmer_1(sys.path[0] + '/data/catering_sale.xls')
-    # programmer_2(sys.path[0] + '/data/catering_sale.xls')
-    # programmer_3(sys.path[0] + '/data/catering_dish_profit.xls')
-    # programmer_4(sys.path[0] + '/data/catering_sale_all.xls')
+    path = os.getcwd()
+    # programmer_1(path + '/data/catering_sale.xls')
+    # programmer_2(path + '/data/catering_sale.xls')
+    # programmer_3(path + '/data/catering_dish_profit.xls')
+    # programmer_4(path + '/data/catering_sale_all.xls')
     pass
