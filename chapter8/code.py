@@ -10,8 +10,6 @@ import time
 
 import pandas as pd
 from sklearn.cluster import KMeans
-
-
 """
 programmer_1-->进行聚类离散化
 programmer_2-->None
@@ -44,8 +42,7 @@ def programmer_1():
         kmodel.fit(data[[key]].as_matrix())
 
         # 聚类中心
-        r1 = pd.DataFrame(kmodel.cluster_centers_,
-                          columns=[item])
+        r1 = pd.DataFrame(kmodel.cluster_centers_, columns=[item])
         # 分类统计
         r2 = pd.Series(kmodel.labels_).value_counts()
         r2 = pd.DataFrame(r2, columns=[item + "n"])
@@ -61,17 +58,17 @@ def programmer_1():
     result = result.sort_index()
     result.to_excel(processedfile)
 
+
 # 自定义连接函数
 def connect_string(x, ms):
     x = list(map(lambda i: sorted(i.split(ms)), x))
-    l = len(x[0])
     r = []
     for i in range(len(x)):
-        for j in range(i, len(x)):
-            if x[i][:l - 1] == x[j][:l - 1] and x[i][l - 1] != x[j][l - 1]:
-                r.append(x[i][:l - 1] + sorted([x[j][l - 1], x[i][l - 1]]))
-
+        for j in range(i + 1, len(x)):
+            if x[i][:-1] == x[j][:-1] and x[i][-1] != x[j][-1]:
+                r.append(x[i][:-1] + sorted([x[j][-1], x[i][-1]]))
     return r
+
 
 # 寻找关联规则函数
 def find_rule(d, support, confidence, ms=u"--"):
@@ -79,27 +76,27 @@ def find_rule(d, support, confidence, ms=u"--"):
 
     # 第一批支持度筛选
     support_series = 1.0 * d.sum() / len(d)
+    
     column = list(support_series[support_series > support].index)
     k = 0
 
     while len(column) > 1:
         k = k + 1
         print(u"\n正在进行第%s次搜索..." % k)
+        
         column = connect_string(column, ms)
         print(u"数目%s..." % len(column))
-
+        index_lst = [ms.join(i) for i in column]
+        
         # 新的支持度函数
-        sf = lambda i: d[i].prod(axis=1, numeric_only = True)
+        sf = lambda i: d[i].prod(axis=1, numeric_only=True)
         # 计算连接后的支持度，开始筛选
-        d_2 = pd.DataFrame(list(map(sf, column)), index=[
-                           ms.join(i) for i in column]).T
-        support_series_2 = 1.0 * \
-            d_2[[ms.join(i) for i in column]].sum() / len(d)
+        d_2 = pd.DataFrame(list(map(sf, column)), index=index_lst).T
+        support_series_2 = 1.0 * d_2[index_lst].sum() / len(d)
         column = list(support_series_2[support_series_2 > support].index)
 
         support_series = support_series.append(support_series_2)
         column2 = []
-
         # 遍历所有可能的情况
         for i in column:
             i = i.split(ms)
@@ -111,7 +108,7 @@ def find_rule(d, support, confidence, ms=u"--"):
 
         for i in column2:
             cofidence_series[ms.join(i)] = support_series[ms.join(
-                sorted(i))] / support_series[ms.join(i[:len(i) - 1])]
+                sorted(i))] / support_series[ms.join(i[:-1])]
         # 置信度筛选
         for i in cofidence_series[cofidence_series > confidence].index:
             result[i] = 0.0
@@ -128,12 +125,12 @@ def find_rule(d, support, confidence, ms=u"--"):
 def programmer_2():
     inputfile = "data/apriori.txt"
     data = pd.read_csv(inputfile, header=None, dtype=object)
-    
+
     # 计时
     start = time.clock()
     print(u"\n转换原始数据至0-1矩阵...")
     # 0-1矩阵的转换
-    ct = lambda x: pd.Series(1, index = x[pd.notnull(x)])
+    ct = lambda x: pd.Series(1, index=x[pd.notnull(x)])
     b = list(map(ct, data.as_matrix()))
     data = pd.DataFrame(b).fillna(0)
     end = time.clock()
@@ -157,3 +154,4 @@ def programmer_2():
 if __name__ == "__main__":
     # programmer_1()
     programmer_2()
+    pass
