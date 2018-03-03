@@ -76,18 +76,18 @@ def find_rule(d, support, confidence, ms=u"--"):
 
     # 第一批支持度筛选
     support_series = 1.0 * d.sum() / len(d)
-    
+
     column = list(support_series[support_series > support].index)
     k = 0
 
     while len(column) > 1:
         k = k + 1
         print(u"\n正在进行第%s次搜索..." % k)
-        
+
         column = connect_string(column, ms)
         print(u"数目%s..." % len(column))
         index_lst = [ms.join(i) for i in column]
-        
+
         # 新的支持度函数
         sf = lambda i: d[i].prod(axis=1, numeric_only=True)
         # 计算连接后的支持度，开始筛选
