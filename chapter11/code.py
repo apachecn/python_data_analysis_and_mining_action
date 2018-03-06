@@ -89,7 +89,7 @@ def programmer_3():
         print(u"一阶差分序列为非白噪声序列，对应的p值为：%s" % p)
     else:
         print(u"一阶差分序列为白噪声序列，对应的p值为：%s" % p)
-
+    print(lb)
 
 def programmer_4():
     discfile = "data/discdata_processed.xls"
@@ -139,7 +139,7 @@ def programmer_5():
         print(u"模型ARIMA（0,1,1)不符合白噪声检验")
     else:
         print(u"模型ARIMA（0,1,1)符合白噪声检验")
-
+    print(lb)
 
 def programmer_6():
 
@@ -163,3 +163,4 @@ if __name__ == "__main__":
     # programmer_4()
     # programmer_5()
     # programmer_6()
+    pass
