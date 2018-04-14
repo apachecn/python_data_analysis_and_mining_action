@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# pylint: disable=W1401
 """
 Created on Mon Nov  6 21:04:24 2017
 
@@ -76,7 +77,7 @@ def programmer_1():
     # 添加新列，全为1,统计某特征分别出现的次数
     counts3[1] = 1
     counts3.groupby(0).sum()
-
+    return c
 
 def programmer_2():
     engine = create_engine(
@@ -140,9 +141,12 @@ def programmer_5():
         def recommend(self, a):
             return np.dot(self.sim, a) * (1 - a)
 
+    Recommender()
+
 if __name__ == "__main__":
     programmer_1()
     programmer_2()
     programmer_3()
     programmer_4()
     programmer_5()
+    pass

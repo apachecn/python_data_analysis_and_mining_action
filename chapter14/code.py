@@ -12,8 +12,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.cluster import AgglomerativeClustering
-
-
 """
 programmer_1-->获取数据，进行离差标准化
 programmer_2-->画谱系聚类图
@@ -39,6 +37,9 @@ def programmer_2():
     Z = linkage(data, method="ward", metric="euclidean")
     P = dendrogram(Z, 0)
     plt.show()
+
+    return P
+
 
 def programmer_3():
 
@@ -77,3 +78,4 @@ if __name__ == "__main__":
     # programmer_1()
     # programmer_2()
     # programmer_3()
+    pass

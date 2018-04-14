@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#pylint: disable=W1401
 """
 Created on Thu Nov  9 15:12:30 2017
 
@@ -122,3 +123,4 @@ if __name__ == "__main__":
     # programmer_3()
     # programmer_4()
     # programmer_5()
+    pass

@@ -131,7 +131,7 @@ def programmer_3(inputfile, outputfile, modelfile, feature_lst, startyear, input
 
     data.to_excel(outputfile)
     # 画出预测结果图
-    p = data[["y", "y_pred"]].plot(subplots=True, style=["b-o", "r-*"])
+    data[["y", "y_pred"]].plot(subplots=True, style=["b-o", "r-*"])
     plt.show()
 
 
@@ -139,7 +139,7 @@ def programmer_4():
     x0 = np.array([3152063, 2213050, 4050122,
                    5265142, 5556619, 4772843, 9463330])
     f, a, b, x00, C, P = GM11(x0)
-
+    print(a, b, x00, C, P)
     print(u'2014年、2015年的预测结果分别为：\n%0.2f万元和%0.2f万元' % (f(8), f(9)))
     print(u'后验差比值为：%0.4f' % C)
     p = pd.DataFrame(x0, columns=["y"], index=range(2007, 2014))
@@ -242,3 +242,4 @@ if __name__ == "__main__":
     #              epochs_num=15000# )
 
     # programmer_4()
+    pass
