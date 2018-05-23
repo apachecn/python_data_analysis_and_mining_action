@@ -13,6 +13,7 @@ from gensim import corpora, models
 
 
 """
+由于每个阶段的数据文件存在依赖关系，所以这里输出保存在了data/目录下
 programmer_1-->提取数据
 programmer_2-->数据去重
 programmer_3-->利用正则去除一些数据
