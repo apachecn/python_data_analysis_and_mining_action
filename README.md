@@ -1,20 +1,20 @@
-# Python Êı¾İ·ÖÎöÓëÍÚ¾òÊµÕ½ ´ø×¢ÊÍÔ´Âë
+# Python æ•°æ®åˆ†æä¸æŒ–æ˜å®æˆ˜ å¸¦æ³¨é‡Šæºç 
 
 ![](https://img3.doubanio.com/view/subject/l/public/s28376942.jpg)
 
-> Ô­Êé£º[Python Êı¾İ·ÖÎöÓëÍÚ¾òÊµÕ½](https://book.douban.com/subject/26677686/)
+> åŸä¹¦ï¼š[Python æ•°æ®åˆ†æä¸æŒ–æ˜å®æˆ˜](https://book.douban.com/subject/26677686/)
 > 
-> ¹±Ï×Õß£º[wnma3mz](https://github.com/wnma3mz)
+> è´¡çŒ®è€…ï¼š[wnma3mz](https://github.com/wnma3mz)
 > 
-> »¶Ó­ÈÎºÎÈË²ÎÓëºÍÍêÉÆ£ºÒ»¸öÈË¿ÉÒÔ×ßµÄºÜ¿ì£¬µ«ÊÇÒ»ÈºÈËÈ´¿ÉÒÔ×ßµÄ¸üÔ¶¡£
+> æ¬¢è¿ä»»ä½•äººå‚ä¸å’Œå®Œå–„ï¼šä¸€ä¸ªäººå¯ä»¥èµ°çš„å¾ˆå¿«ï¼Œä½†æ˜¯ä¸€ç¾¤äººå´å¯ä»¥èµ°çš„æ›´è¿œã€‚
 
-+   [ApacheCN »úÆ÷Ñ§Ï°½»Á÷Èº 629470233](http://shang.qq.com/wpa/qunwpa?idkey=30e5f1123a79867570f665aa3a483ca404b1c3f77737bc01ec520ed5f078ddef)
-+   [ApacheCN Ñ§Ï°×ÊÔ´](http://www.apachecn.org/)
++   [ApacheCN æœºå™¨å­¦ä¹ äº¤æµç¾¤ 629470233](http://shang.qq.com/wpa/qunwpa?idkey=30e5f1123a79867570f665aa3a483ca404b1c3f77737bc01ec520ed5f078ddef)
++   [ApacheCN å­¦ä¹ èµ„æº](http://www.apachecn.org/)
 
 &zwj;
 
-+ [ÔÚÏßÔÄ¶Á](https://www.gitbook.com/book/wizardforcel/ppdam-code-notes/details)
-+ [PDF¸ñÊ½](https://www.gitbook.com/download/pdf/book/wizardforcel/ppdam-code-notes)
-+ [EPUB¸ñÊ½](https://www.gitbook.com/download/epub/book/wizardforcel/ppdam-code-notes)
-+ [MOBI¸ñÊ½](https://www.gitbook.com/download/mobi/book/wizardforcel/ppdam-code-notes)
-+ [´úÂë²Ö¿â](https://github.com/apachecn/python_data_analysis_and_mining_action)
++ [åœ¨çº¿é˜…è¯»](https://www.gitbook.com/book/wizardforcel/ppdam-code-notes/details)
++ [PDFæ ¼å¼](https://www.gitbook.com/download/pdf/book/wizardforcel/ppdam-code-notes)
++ [EPUBæ ¼å¼](https://www.gitbook.com/download/epub/book/wizardforcel/ppdam-code-notes)
++ [MOBIæ ¼å¼](https://www.gitbook.com/download/mobi/book/wizardforcel/ppdam-code-notes)
++ [ä»£ç ä»“åº“](https://github.com/apachecn/python_data_analysis_and_mining_action)
