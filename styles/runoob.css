@@ -1,0 +1,29 @@
+.example_code {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+}
+
+.example_code>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.example_code code, .example_code tt {
+  background-color: transparent;
+  border: none;
+}
+
+.tryitbtn {
+  display: none;
+}
