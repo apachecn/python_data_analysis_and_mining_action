@@ -38,8 +38,9 @@ def programmer_1(file_name):
     # 画箱线图
     p = data.boxplot(return_type='dict')
     x = p['fliers'][0].get_xdata()
-    y = p['fliers'][0].get_ydata().sort()
-
+    y = p['fliers'][0].get_ydata()
+    y = np.sort(y)
+    
     for i in range(len(x)):
         # 处理临界情况， i=0时
         temp = y[i] - y[i - 1] if i != 0 else -78 / 3
